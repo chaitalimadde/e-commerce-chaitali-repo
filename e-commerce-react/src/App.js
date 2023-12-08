@@ -1,10 +1,12 @@
-import logo from './logo.svg';
 import './App.css';
+import Navbar from './Components/Navbar';
+import Routing from './routing';
 
-function App() {
+const  App =()=> {
   return (
     <div className="App">
-     <h4>Chaitali343</h4>
+      <Navbar />
+      <Routing />
     </div>
   );
 }
