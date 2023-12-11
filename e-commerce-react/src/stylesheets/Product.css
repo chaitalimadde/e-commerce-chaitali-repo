@@ -1,0 +1,23 @@
+.card-img-top{
+    height: 40vh;
+}
+
+.single{
+    /* display: flex;
+    align-items: center;
+    height: 100vh;
+    justify-content: center;
+    margin: 0; */
+    margin-top: 10%;
+}
+
+.textAlign{
+    text-align: left;
+}
+
+.spinner-border{
+    width: 6rem !important; 
+    height: 6rem !important;
+    position: absolute;
+    top: 30%;
+}

@@ -4,9 +4,21 @@
 }
 
 .logo2{
-    width: 11%;
-    height:11%;
+    width: 8%;
+    height:8%;
 
 }
 
 
+.cart-basket {
+    font-size: .6rem;
+    position: absolute;
+    top: 15px;
+    /* right: -5px; */
+    margin-left: 9%;
+    width: 15px;
+    height: 15px;
+    color: #fff;
+    background-color: #418deb;
+    border-radius: 50%;
+  }

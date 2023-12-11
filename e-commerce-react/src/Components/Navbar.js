@@ -7,7 +7,7 @@ const Navbar = () => {
          {/* <div className="container-fluid">
         <div className="row"> */}
          
-      <nav className="navbar navbar-dark bg-dark navbar-expand-lg">
+      <nav className="navbar navbar-light bg-light navbar-expand-lg">
       <img src="/assets/logo1.PNG" alt="images" className="logo"/>
         <button
           className="navbar-toggler"
@@ -53,7 +53,7 @@ const Navbar = () => {
    
             <img src="/assets/user.jpg" alt="user" className='logo2 me-5'/>
             <img src="/assets/cart2.png" alt="cart" className='logo2'/>
-           
+           <span className='cart-basket'>1</span>
          </div>
         </div>
       </nav>
