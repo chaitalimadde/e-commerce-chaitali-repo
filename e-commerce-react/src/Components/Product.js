@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
-import {getProducts, getCategories, getFilter, getGenders,getSizes} from '../API/Dataservice';
-import '../stylesheets/Product.css'
+// import {getProducts, getCategories, getFilter, getGenders,getSizes} from '../API/Dataservice';
+import DataService from '../API/Dataservice';
+import '../stylesheets/Product.css';
 import { useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Navbar from './Navbar';
+import Authservice from "../API/Authservice";
 
 const Product =()=>{
 const [productData, setProductData] =useState();
@@ -21,7 +23,7 @@ const navigate = useNavigate();
 
     const fetchData =async()=>{
     try{
-     const [res1,res2,res3,res4 ]= await Promise.all([getProducts(),getCategories(),getSizes(),getGenders()]);
+     const [res1,res2,res3,res4 ]= await Promise.all([DataService.getProducts(),DataService.getCategories(),DataService.getSizes(),DataService.getGenders()]);
         setProductData(res1.data.data);
         setCatData(res2.data.data);
         setsizeData(res3.data.data);
@@ -39,7 +41,7 @@ const navigate = useNavigate();
             "gender":selectedGender? `${selectedGender}`: "",
             "category":selectedCat? `${selectedCat}`: "",
         }
-        getFilter(temp).then((res)=>{
+        Authservice(temp).then((res)=>{
             console.log(res)
         })
     }

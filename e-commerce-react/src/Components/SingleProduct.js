@@ -2,7 +2,8 @@ import '../stylesheets/Product.css'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import { getSingleProduct} from '../API/Dataservice'
+// import { getSingleProduct} from '../API/Dataservice'
+import Dataservice from '../API/Dataservice';
 
 const SingleProduct =()=>{
 const {id} = useParams();
@@ -11,7 +12,7 @@ const [count, setCount] = useState(0);
 const navigate = useNavigate();
 
 useEffect(()=>{
-    getSingleProduct(id).then((res)=>{
+  Dataservice.getSingleProduct(id).then((res)=>{
         setProd(res.data.data.attributes)
     })
 })

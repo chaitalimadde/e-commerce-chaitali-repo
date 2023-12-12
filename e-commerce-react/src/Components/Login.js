@@ -1,17 +1,33 @@
-
+import { useState } from 'react';
 import '../stylesheets/Register.css';
 import { useNavigate } from "react-router";
+import DataService  from "../API/Dataservice"
+import { useDispatch } from 'react-redux';
+import { addToken } from '../Redux/Actions';
+
+
 
 const Login =()=>{
 const navigate = useNavigate();
-   
+const dispatch = useDispatch();
+const [email, setEmail] = useState();
+const [password, setPassword] = useState();
 
 const gotoRegister =()=>{
     navigate('/register');
 }
 
 const gotoHomePage =()=>{
-    navigate('/home');
+    let payload={
+        "identifier":email,
+        "password":password
+    }
+    DataService.loginService(payload).then((res)=>{
+        console.log(res.data.jwt)
+        dispatch(addToken(res.data.jwt))
+        navigate('/home');
+    })
+   
 }
     return(
         <div className="container px-4 py-5 mx-auto">
@@ -29,12 +45,14 @@ const gotoHomePage =()=>{
 
                         <div className="form-group">
                             <label className="form-control-label text-muted">Username</label>
-                            <input type="text" id="email" name="email" placeholder="Enter Email id" className="form-control" />
+                            <input type="text" id="email" name="email" placeholder="Enter Email id" 
+                            className="form-control"  onChange={(e)=>setEmail(e.target.value)}/>
                         </div>
 
                         <div className="form-group">
                             <label className="form-control-label text-muted">Password</label>
-                            <input type="password" id="psw" name="psw" placeholder="Password" className="form-control" />
+                            <input type="password" id="psw" name="psw" placeholder="Password" 
+                            className="form-control" onChange={(e)=>setPassword(e.target.value)}/>
                         </div>
 
                         <div className="row justify-content-center my-3 px-3">

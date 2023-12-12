@@ -1,29 +1,42 @@
 import axios from "axios";
+import { useSelector } from "react-redux";
+import AuthHeader from "./AuthHeader";
+
 
 const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzAyMjg3MDgyLCJleHAiOjE3MDQ4NzkwODJ9.-cIGHGviGo1h88FoV49ffs60UlVTDbIuY9OG2ZgnSGA';
+class DataService {
 
-export const getProducts = () =>{
+getProducts = () =>{
     return axios.get('http://localhost:1337/api/products/?populate=*');
 }
 
-export const getSingleProduct = (id) =>{
+
+getSingleProduct = (id) =>{
     return axios.get(`http://localhost:1337/api/products/${id}/?populate=*`);
 }
 
-export const getCategories = () =>{
+getCategories = () =>{
     return axios.get(`http://localhost:1337/api/categories`);
 }
 
-export const getSizes = () =>{
+ getSizes = () =>{
     return axios.get(`http://localhost:1337/api/sizes`);
 }
 
-export const getGenders = () =>{
+getGenders = () =>{
     return axios.get(`http://localhost:1337/api/genders`);
 }
 
-export const getFilter =(data)=>{
-    // return axios.post("http://localhost:1337/api/filterProducts", data)
+registerService =(data) => {
+    return axios.post("http://localhost:1337/api/auth/local/register", data);
+  }
+
+loginService =(data) => {
+    return axios.post("http://localhost:1337/api/auth/local", data);
+  }
+
+getFilter =(data)=>{
+   // return axios.post("http://localhost:1337/api/filterProducts", data, { headers: AuthHeader() })
     return axios.request({
         headers: {
           Authorization: `Bearer ${token}`
@@ -35,3 +48,6 @@ export const getFilter =(data)=>{
         console.log(response.data);
       });
 }
+
+}
+export default new DataService();
