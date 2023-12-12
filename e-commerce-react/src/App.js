@@ -8,8 +8,15 @@ const  App =()=> {
   return (
     <div className="App">
       {/* <Navbar /> */}
-      <Routing />
+      
       {/* <Login /> */}
+
+      <div>
+      <Navbar />
+      </div>
+      <div>
+      <Routing />
+      </div>
     </div>
   );
 }

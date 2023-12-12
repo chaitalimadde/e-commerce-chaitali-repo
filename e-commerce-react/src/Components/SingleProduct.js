@@ -4,21 +4,41 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 // import { getSingleProduct} from '../API/Dataservice'
 import Dataservice from '../API/Dataservice';
+import { addItems } from '../Redux/Actions';
+import { useDispatch } from 'react-redux';
+import Navbar from './Navbar';
 
 const SingleProduct =()=>{
 const {id} = useParams();
 const [prod, setProd] = useState();
 const [count, setCount] = useState(0);
 const navigate = useNavigate();
+const dispatch = useDispatch();
+
+
+const getSingleAPI =(async)=>{
+  Dataservice.getSingleProduct(id).then((res)=>{
+    setProd(res.data.data.attributes)
+})
+if(prod){
+dispatch(addItems(prod,count))
+}
+}
 
 useEffect(()=>{
-  Dataservice.getSingleProduct(id).then((res)=>{
-        setProd(res.data.data.attributes)
-    })
-})
+  getSingleAPI();
+
+}, [count])
+
+const addCount =()=>{
+  setCount(count + 1);
+  
+}
+
     return (
       
         <div className='single'>
+         
           { prod ? <></>:
         <div class="spinner-border" role="status">
           <span class="visually-hidden">Loading...</span>
@@ -52,10 +72,10 @@ useEffect(()=>{
                {
                 count > 0 ?
                 <div className='mb-4'><button type="button" className="btn btn-danger" onClick={()=>setCount(count - 1)}> - </button>&nbsp;{count}&nbsp;
-                <button type="button" className="btn btn-secondary" onClick={()=>setCount(count + 1)}>+</button></div>
+                <button type="button" className="btn btn-secondary" onClick={addCount}>+</button></div>
                 :<></>
                }
-               <button type="button" className="btn btn-primary me-4" onClick={()=>setCount(count + 1)}>Add to Cart</button>
+               <button type="button" className="btn btn-primary me-4" onClick={addCount}>Add to Cart</button>
                <button type="button" class="btn btn-dark" onClick={()=>navigate("/product")}>Back</button>
                
               </div>

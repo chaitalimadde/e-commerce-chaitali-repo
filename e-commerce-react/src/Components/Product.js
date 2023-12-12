@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Navbar from './Navbar';
-import Authservice from "../API/Authservice";
+import Dataservice from "../API/Dataservice";
 
 const Product =()=>{
 const [productData, setProductData] =useState();
@@ -41,7 +41,7 @@ const navigate = useNavigate();
             "gender":selectedGender? `${selectedGender}`: "",
             "category":selectedCat? `${selectedCat}`: "",
         }
-        Authservice(temp).then((res)=>{
+        Dataservice(temp).then((res)=>{
             console.log(res)
         })
     }
@@ -70,7 +70,7 @@ const navigate = useNavigate();
 
     return (
       <div>
-        <Navbar />
+        {/* <Navbar /> */}
        { productData ? <><h4>Welcome to Product page</h4></>:
         <div className="spinner-border" role="status">
           <span className="visually-hidden">Loading...</span>

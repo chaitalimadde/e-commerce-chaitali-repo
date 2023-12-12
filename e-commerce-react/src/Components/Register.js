@@ -2,23 +2,29 @@
 import { useState } from 'react';
 import '../stylesheets/Register.css';
 import { useNavigate } from 'react-router';
+import DataService from '../API/Dataservice'
 
 const Register =()=>{
 const [data, setData] = useState();
 const navigate = useNavigate();
+const[fname, setFname] = useState();
+const[lname, setLname] = useState();
+const[pass, setPass] = useState();
+const[email, setEmail] = useState();
+const[user, setUser] = useState();
 
     const handleSubmit = async (e) => {
 
         let data = {
-            "first_name" : "",
-            "last_name"  : "",
-            "password"   : "",
-            "email"      : "",
-            "username"   : ""
+            "first_name" : fname,
+            "last_name"  : lname,
+            "password"   : pass,
+            "email"      : email,
+            "username"   : user
         }
-        // registerService(data).then((res)=>{
-        //     setData(res.data.data.attributes)
-        // })
+       await DataService.registerService(data).then((res)=>{
+            setData(res.user);
+        })
       };
 
     return (
@@ -34,26 +40,31 @@ const navigate = useNavigate();
                         <h6 className="msg-info">Register to LensWear account</h6>
 
                         <div className="form-group mb-3">
-                            <input type="text" id="first" name="first" placeholder="Enter Firstname" className="form-control" />
+                            <input type="text" id="first" name="first" placeholder="Enter Firstname" 
+                            className="form-control" onChange={(e)=>setFname(e.target.value)}/>
                         </div>
 
                         <div className="form-group mb-3">
-                            <input type="text" id="last" name="last" placeholder="Enter Lastname" className="form-control" />
+                            <input type="text" id="last" name="last" placeholder="Enter Lastname" 
+                            className="form-control" onChange={(e)=>setLname(e.target.value)}/>
                         </div>
 
                         <div className="form-group mb-3">
-                            <input type="password" id="psw" name="psw" placeholder="Password" className="form-control" />
+                            <input type="password" id="psw" name="psw" placeholder="Password" 
+                            className="form-control" onChange={(e)=>setPass(e.target.value)}/>
                         </div>
 
                         <div className="form-group mb-3">
-                            <input type="text" id="email" name="email" placeholder="Enter Email" className="form-control" />
+                            <input type="text" id="email" name="email" placeholder="Enter Email" 
+                            className="form-control" onChange={(e)=>setEmail(e.target.value)}/>
                         </div>
 
                         <div className="form-group mb-3">
-                            <input type="text" id="user" name="user" placeholder="Enter Username" className="form-control" />
+                            <input type="text" id="user" name="user" placeholder="Enter Username" 
+                            className="form-control" onChange={(e)=>setUser(e.target.value)}/>
                         </div>
                         <div className="row justify-content-center my-3 px-3">
-                            <button className="btn-block btn-color">Register</button>
+                            <button className="btn-block btn-color" onClick={handleSubmit}>Register</button>
                         </div>
 
                         

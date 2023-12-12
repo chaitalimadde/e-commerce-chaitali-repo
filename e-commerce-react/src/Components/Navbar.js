@@ -1,12 +1,18 @@
 import '../stylesheets/Navbar.css'
-import { NavLink } from "react-router-dom";
+import { NavLink , useLocation} from "react-router-dom";
+import { useSelector } from 'react-redux';
+import { useState } from 'react';
 
 const Navbar = () => {
-  return (
+const location = useLocation();
+const restrictedRoutes = ['/','/register'];
+const shouldDisplayNavbar = !restrictedRoutes.includes(location.pathname)
+const [count,setCount] =useState(0);
+const itemCount = useSelector((state)=>state.Item)
+console.log(itemCount)
+
+  return shouldDisplayNavbar?(
     <div>
-         {/* <div className="container-fluid">
-        <div className="row"> */}
-         
       <nav className="navbar navbar-light bg-light navbar-expand-lg">
       <img src="/assets/logo1.PNG" alt="images" className="logo"/>
         <button
@@ -53,15 +59,17 @@ const Navbar = () => {
    
             <img src="/assets/user.jpg" alt="user" className='logo2 me-5'/>
             <img src="/assets/cart2.png" alt="cart" className='logo2'/>
-           <span className='cart-basket'>1</span>
+           <span className='cart-basket'>{count}</span>
          </div>
         </div>
+  
       </nav>
+     
       </div>
      
     // </div>
     // </div>
-  );
+  ) : null;
 };
 
 export default Navbar;
