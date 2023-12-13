@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dataservice from "../API/Dataservice";
-import ErrorUI from "./ErrorUI";
+import { timeout } from "q";
 
 const Product =()=>{
 const [productData, setProductData] =useState();
@@ -17,6 +17,9 @@ const [selectedCat, setSelectedCat] =useState("");
 const [selectedSize, setSelectedSize] =useState("");
 const [selectedGender, setSelectedGender] =useState("");
 const [error, setError] =useState(false);
+const [showSpinner, setshowSpinner] =useState(true);
+const [isFilterApplied, setISFilterApplied] = useState(false);
+const [filterData, setfilterData] =useState();
 
 const navigate = useNavigate();
 
@@ -29,6 +32,7 @@ const navigate = useNavigate();
         setCatData(res2.data.data);
         setsizeData(res3.data.data);
         setgenderData(res4.data.data);
+        setshowSpinner(false);
     }
     catch(err){
         setError(true);
@@ -36,20 +40,30 @@ const navigate = useNavigate();
     }
     }
    
-    fetchData();
+    fetchData(); //all product fetching
+
+    const filterAPICalled =async(payload) =>{
+     
+      await Dataservice.getFilter(payload).then((res)=>{
+        setISFilterApplied(true);
+        setfilterData(res.data.data)
+        setshowSpinner(false);
+      },2000)
+      .catch((err)=>{
+        setError(true);
+        navigate("/error");
+      })
+   
+    }
     if(selectedCat || selectedGender || selectedSize){
         let temp ={
             "size": selectedSize? `${selectedSize}`: "",
             "gender":selectedGender? `${selectedGender}`: "",
             "category":selectedCat? `${selectedCat}`: "",
         }
-        Dataservice.getFilter(temp).then((res)=>{
-            console.log(res)
-        })
-        .catch((err)=>{
-          setError(true);
-          navigate("/error");
-        })
+        filterAPICalled(temp);  //filtered products list
+        setshowSpinner(true);
+       
     }
     }, [selectedCat,selectedSize,selectedGender])
 
@@ -61,29 +75,28 @@ const navigate = useNavigate();
         
         if(type === "C"){
             setSelectedCat(name)
-            let d =document.getElementById("dropdown-basic-button1");
-            d.textContent = name;
            
         }
         if(type === "S"){
             setSelectedSize(name)
-            let d =document.getElementById("dropdown-basic-button2");
-            d.textContent = name;
            
         }
         if(type === "G"){
             setSelectedGender(name)
-            let d =document.getElementById("dropdown-basic-button3");
-            d.textContent = name;
           
         }
         
     }
 
+    const clearFilter =()=>{
+      setISFilterApplied(false);
+      setfilterData(productData);
+    }
+
     return (
       <div>
         
-        {productData ? (
+        {!showSpinner ? (
           <>
             <h4>Welcome to Product page</h4>
           </>
@@ -92,7 +105,7 @@ const navigate = useNavigate();
             <span className="visually-hidden">Loading...</span>
           </div>
         )}
-        <div className="row mt-4 mb-4">
+        <div className="row mt-5 mb-5">
           <div className="col-sm-2">
             <DropdownButton id="dropdown-basic-button1" title="Select Category" >
               {catData &&
@@ -135,11 +148,14 @@ const navigate = useNavigate();
               })  
               }
             </DropdownButton>
-           
+          </div>
+          <div className="col-sm-2">
+          <button type="button" class="btn btn-secondary" onClick={clearFilter}>Clear All Filters</button>
           </div>
         </div>
+        { !showSpinner ?
         <div className="row">
-          {productData &&
+          { !isFilterApplied ? productData &&
             productData.map((data) => (
               <div className="col-sm-3 mb-4" key={data.id}>
                 <div className="card" onClick={() => productClicked(data.id)}>
@@ -162,8 +178,52 @@ const navigate = useNavigate();
                   </div>
                 </div>
               </div>
-            ))}
-        </div>
+            )) :
+
+            filterData ?
+            filterData.map((data) => (
+              <div className="col-sm-3 mb-4" key={data.id}>
+                <div className="card" onClick={() => productClicked(data.id)}>
+                  <img
+                    className="card-img-top"
+                    src={data.image_url}
+                    alt="img tap"
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      Product Name:{data.product_name}
+                    </h5>
+                    <p className="card-text">
+                      Description:{data.description}
+                    </p>
+                    <p className="card-text">
+                      Available Qty: {data.quantity}
+                    </p>
+                    <p className="card-text">
+                      category: {data.category.category_name}
+                    </p>
+                    <p className="card-text">Sizes: 
+                    {
+                      data.sizes.map((i)=>{
+                        return i.size +" "
+                      })
+                    }
+                    
+                     
+                    </p>
+                    <p className="card-text">
+                      gender: {data.gender.title}
+                    </p>
+                    <p className="card-text">Price: {data.price}</p>
+                  </div>
+                </div>
+              </div>
+            ))
+            : <div>Sorry Product is not Available</div>
+
+          }
+        </div> :<></>
+      }
       </div>
     );
 }

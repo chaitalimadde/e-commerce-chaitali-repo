@@ -44,9 +44,7 @@ getFilter =(data)=>{
         method: "POST",
         url: `http://localhost:1337/api/filterProducts`,
         data:data
-      }).then(response => {
-        console.log(response.data);
-      });
+      })
 }
 
 }
