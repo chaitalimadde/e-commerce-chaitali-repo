@@ -4,6 +4,7 @@ import Product from "./Components/Product";
 import SingleProduct from "./Components/SingleProduct";
 import Login from "./Components/Login";
 import Register from "./Components/Register";
+import ErrorUI from "./Components/ErrorUI";
 
 const Routing = ()=>{
 
@@ -15,6 +16,7 @@ const Routing = ()=>{
         <Route  path="/home" Component={Home}></Route>
         <Route  path="/product" Component={Product}></Route>
         <Route  path="/product/:id" Component={SingleProduct}></Route>
+        <Route  path="/error" Component={ErrorUI}></Route>
         </Routes>
         </div>
     )

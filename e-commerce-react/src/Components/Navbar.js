@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 const Navbar = () => {
 const location = useLocation();
-const restrictedRoutes = ['/','/register'];
+const restrictedRoutes = ['/','/register','/error'];
 const shouldDisplayNavbar = !restrictedRoutes.includes(location.pathname)
 const [count,setCount] =useState(0);
 const itemCount = useSelector((state)=>state.Item)
@@ -66,9 +66,7 @@ console.log(itemCount)
       </nav>
      
       </div>
-     
-    // </div>
-    // </div>
+
   ) : null;
 };
 

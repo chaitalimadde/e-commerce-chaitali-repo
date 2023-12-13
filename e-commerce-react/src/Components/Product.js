@@ -5,8 +5,8 @@ import '../stylesheets/Product.css';
 import { useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Navbar from './Navbar';
 import Dataservice from "../API/Dataservice";
+import ErrorUI from "./ErrorUI";
 
 const Product =()=>{
 const [productData, setProductData] =useState();
@@ -16,6 +16,7 @@ const [genderData, setgenderData] =useState();
 const [selectedCat, setSelectedCat] =useState("");
 const [selectedSize, setSelectedSize] =useState("");
 const [selectedGender, setSelectedGender] =useState("");
+const [error, setError] =useState(false);
 
 const navigate = useNavigate();
 
@@ -30,7 +31,8 @@ const navigate = useNavigate();
         setgenderData(res4.data.data);
     }
     catch(err){
-        console.log(err)
+        setError(true);
+        navigate("/error");
     }
     }
    
@@ -41,8 +43,12 @@ const navigate = useNavigate();
             "gender":selectedGender? `${selectedGender}`: "",
             "category":selectedCat? `${selectedCat}`: "",
         }
-        Dataservice(temp).then((res)=>{
+        Dataservice.getFilter(temp).then((res)=>{
             console.log(res)
+        })
+        .catch((err)=>{
+          setError(true);
+          navigate("/error");
         })
     }
     }, [selectedCat,selectedSize,selectedGender])
@@ -55,55 +61,82 @@ const navigate = useNavigate();
         
         if(type === "C"){
             setSelectedCat(name)
-            console.log({selectedCat});
+            let d =document.getElementById("dropdown-basic-button1");
+            d.textContent = name;
+           
         }
         if(type === "S"){
             setSelectedSize(name)
-            console.log({setSelectedSize});
+            let d =document.getElementById("dropdown-basic-button2");
+            d.textContent = name;
+           
         }
         if(type === "G"){
             setSelectedGender(name)
-            console.log({setSelectedGender});
+            let d =document.getElementById("dropdown-basic-button3");
+            d.textContent = name;
+          
         }
         
     }
 
     return (
       <div>
-        {/* <Navbar /> */}
-       { productData ? <><h4>Welcome to Product page</h4></>:
-        <div className="spinner-border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </div>
-        }
+        
+        {productData ? (
+          <>
+            <h4>Welcome to Product page</h4>
+          </>
+        ) : (
+          <div className="spinner-border" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        )}
         <div className="row mt-4 mb-4">
-        <div className="col-sm-2">  
-            <DropdownButton id="dropdown-basic-button" title="Select Category">
-                {
-              catData && catData.map((item) =>{
-                return <Dropdown.Item  onClick={()=>filterOptionSelected("C",item.attributes.category_name)} key={item.id}>{item.attributes.category_name}</Dropdown.Item>      
-              })  
-              }
+          <div className="col-sm-2">
+            <DropdownButton id="dropdown-basic-button1" title="Select Category" >
+              {catData &&
+                catData.map((item) => {
+                  return (
+                    <Dropdown.Item
+                    onClick={() =>
+                        filterOptionSelected("C", item.attributes.category_name)
+                      }
+                      key={item.id}
+                    >
+                      {item.attributes.category_name}
+                    </Dropdown.Item>
+                  );
+                })}
             </DropdownButton>
-        </div>
-        <div className="col-sm-2">  
-            <DropdownButton id="dropdown-basic-button" title="Select Size">
-                {
-              sizeData && sizeData.map((item) =>{
-                return <Dropdown.Item onClick={()=>filterOptionSelected("S",item.attributes.size)} key={item.id}>{item.attributes.size}</Dropdown.Item>      
-              })  
-              }
+          </div>
+          <div className="col-sm-2">
+            <DropdownButton id="dropdown-basic-button2" title="Select Size" >
+              {sizeData &&
+                sizeData.map((item) => {
+                  return (
+                    <Dropdown.Item
+                    onClick={() =>
+                        filterOptionSelected("S", item.attributes.size)
+                      }
+                      key={item.id}
+                    >
+                      {item.attributes.size}
+                    </Dropdown.Item>
+                  );
+                })}
             </DropdownButton>
-        </div>
-        <div className="col-sm-2">  
-            <DropdownButton id="dropdown-basic-button" title="Select Gender">
+          </div>
+          <div className="col-sm-2">
+            <DropdownButton id="dropdown-basic-button3" title="Select Gender" >
                 {
               genderData && genderData.map((item) =>{
                 return <Dropdown.Item onClick={()=>filterOptionSelected("G",item.attributes.title)} key={item.id}>{item.attributes.title}</Dropdown.Item>      
               })  
               }
             </DropdownButton>
-        </div>
+           
+          </div>
         </div>
         <div className="row">
           {productData &&

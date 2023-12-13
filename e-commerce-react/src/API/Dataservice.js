@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useSelector } from "react-redux";
-import AuthHeader from "./AuthHeader";
-
+import TokenAuth from "../Components/TokenAuth";
 
 const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzAyMjg3MDgyLCJleHAiOjE3MDQ4NzkwODJ9.-cIGHGviGo1h88FoV49ffs60UlVTDbIuY9OG2ZgnSGA';
 class DataService {
@@ -36,10 +35,11 @@ loginService =(data) => {
   }
 
 getFilter =(data)=>{
+  const tokenVal = TokenAuth().token;
    // return axios.post("http://localhost:1337/api/filterProducts", data, { headers: AuthHeader() })
     return axios.request({
         headers: {
-          Authorization: `Bearer ${token}`
+          Authorization: `Bearer ${tokenVal}`
         },
         method: "POST",
         url: `http://localhost:1337/api/filterProducts`,

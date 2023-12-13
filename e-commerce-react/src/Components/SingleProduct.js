@@ -20,6 +20,10 @@ const getSingleAPI =(async)=>{
   Dataservice.getSingleProduct(id).then((res)=>{
     setProd(res.data.data.attributes)
 })
+.catch((err) =>{
+  navigate("/error")
+})
+
 if(prod){
 dispatch(addItems(prod,count))
 }

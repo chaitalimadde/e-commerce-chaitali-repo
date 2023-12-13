@@ -27,6 +27,9 @@ const gotoHomePage =()=>{
         dispatch(addToken(res.data.jwt))
         navigate('/home');
     })
+    .catch((err) =>{
+        navigate("/error")
+    })
    
 }
     return(

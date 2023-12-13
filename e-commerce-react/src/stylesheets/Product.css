@@ -21,3 +21,8 @@
     position: absolute;
     top: 30%;
 }
+
+.dropdown-toggle 
+{
+    width: 80% !important;
+}

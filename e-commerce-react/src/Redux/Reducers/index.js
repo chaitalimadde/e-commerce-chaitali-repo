@@ -8,7 +8,7 @@ const addTokenReducer =(state= initialState, action) =>{
        
         case 'ADD_TOKEN':
             return {
-                ...state, token:[...state.add, action.payload]
+                ...state, token:action.payload
             }
         
         case 'ADD_ITEM':

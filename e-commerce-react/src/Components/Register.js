@@ -25,6 +25,9 @@ const[user, setUser] = useState();
        await DataService.registerService(data).then((res)=>{
             setData(res.user);
         })
+        .catch((err) =>{
+            navigate("/error")
+        })
       };
 
     return (
