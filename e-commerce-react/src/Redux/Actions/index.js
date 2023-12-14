@@ -17,3 +17,12 @@ export const addItems =(item,count) =>{
         }
     }
 };
+
+export const deleteItems =(item) =>{
+    return{
+        type: 'DELETE_ITEM',
+        payload: {
+            name: item.product_name
+        }
+    }
+};

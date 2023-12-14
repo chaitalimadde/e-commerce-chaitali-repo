@@ -7,6 +7,7 @@ import Dataservice from '../API/Dataservice';
 import { addItems } from '../Redux/Actions';
 import { useDispatch } from 'react-redux';
 import Navbar from './Navbar';
+import { deleteItems } from '../Redux/Actions';
 
 const SingleProduct =()=>{
 const {id} = useParams();
@@ -39,6 +40,10 @@ const addCount =()=>{
   
 }
 
+const deleteCount =(name)=>{
+  setCount(count - 1)
+  dispatch(deleteItems(prod))
+}
     return (
       
         <div className='single'>
@@ -75,7 +80,7 @@ const addCount =()=>{
                  
                {
                 count > 0 ?
-                <div className='mb-4'><button type="button" className="btn btn-danger" onClick={()=>setCount(count - 1)}> - </button>&nbsp;{count}&nbsp;
+                <div className='mb-4'><button type="button" className="btn btn-danger" onClick={()=>deleteCount(prod.name)}> - </button>&nbsp;{count}&nbsp;
                 <button type="button" className="btn btn-secondary" onClick={addCount}>+</button></div>
                 :<></>
                }

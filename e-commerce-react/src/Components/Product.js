@@ -98,14 +98,14 @@ const navigate = useNavigate();
         
         {!showSpinner ? (
           <>
-            <h4>Welcome to Product page</h4>
+            {/* <h4>Welcome to Product page</h4> */}
           </>
         ) : (
           <div className="spinner-border" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
         )}
-        <div className="row mt-5 mb-5">
+        <div className="row mt-3 mb-5">
           <div className="col-sm-2">
             <DropdownButton id="dropdown-basic-button1" title="Select Category" >
               {catData &&
