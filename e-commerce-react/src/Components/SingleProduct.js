@@ -2,55 +2,65 @@ import '../stylesheets/Product.css'
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-// import { getSingleProduct} from '../API/Dataservice'
 import Dataservice from '../API/Dataservice';
 import { addItems } from '../Redux/Actions';
 import { useDispatch } from 'react-redux';
-import Navbar from './Navbar';
 import { deleteItems } from '../Redux/Actions';
+import { useSelector } from 'react-redux';
 
 const SingleProduct =()=>{
 const {id} = useParams();
 const [prod, setProd] = useState();
-const [count, setCount] = useState(0);
+const [prodID, setProdID] = useState();
+const [countStore, setCountStore] = useState();
 const navigate = useNavigate();
 const dispatch = useDispatch();
+const itemCount = useSelector((state)=>state.Item)
 
 
 const getSingleAPI =(async)=>{
   Dataservice.getSingleProduct(id).then((res)=>{
-    setProd(res.data.data.attributes)
+    setProd(res.data.data.attributes);
+    setProdID(res.data.data.id);
+   
 })
 .catch((err) =>{
   navigate("/error")
 })
 
-if(prod){
-dispatch(addItems(prod,count))
 }
-}
+
 
 useEffect(()=>{
   getSingleAPI();
+  if(prod){
+    let filterData = itemCount.filter((i)=>i.name === prod.product_name)
+  if(filterData.length > 0){
+    setCountStore(filterData[0].count);
+  }
+  else{
+    setCountStore(0)
+  }
+   
+   console.log(countStore)
+  }
 
-}, [count])
+},[prod]);
 
 const addCount =()=>{
-  setCount(count + 1);
-  
+    dispatch(addItems(prod,prodID))
 }
 
-const deleteCount =(name)=>{
-  setCount(count - 1)
-  dispatch(deleteItems(prod))
+const deleteCount =()=>{
+  dispatch(deleteItems(prod,prodID))
 }
     return (
       
         <div className='single'>
          
           { prod ? <></>:
-        <div class="spinner-border" role="status">
-          <span class="visually-hidden">Loading...</span>
+        <div className="spinner-border" role="status">
+          <span className="visually-hidden">Loading...</span>
         </div>
         }
       <div className="container">
@@ -78,14 +88,16 @@ const deleteCount =(name)=>{
                   Go somewhere
                 </a> */}
                  
-               {
-                count > 0 ?
-                <div className='mb-4'><button type="button" className="btn btn-danger" onClick={()=>deleteCount(prod.name)}> - </button>&nbsp;{count}&nbsp;
+              {
+                countStore ?
+                <div className='mb-4'><button type="button" className="btn btn-danger" onClick={deleteCount}> - </button>&nbsp;{countStore}&nbsp;
                 <button type="button" className="btn btn-secondary" onClick={addCount}>+</button></div>
                 :<></>
-               }
+              }
+                
+             
                <button type="button" className="btn btn-primary me-4" onClick={addCount}>Add to Cart</button>
-               <button type="button" class="btn btn-dark" onClick={()=>navigate("/product")}>Back</button>
+               <button type="button" className="btn btn-dark" onClick={()=>navigate("/product")}>Back</button>
                
               </div>
             </div>

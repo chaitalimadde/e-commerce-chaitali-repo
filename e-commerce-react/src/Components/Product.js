@@ -150,7 +150,7 @@ const navigate = useNavigate();
             </DropdownButton>
           </div>
           <div className="col-sm-2">
-          <button type="button" class="btn btn-secondary" onClick={clearFilter}>Clear All Filters</button>
+          <button type="button" className="btn btn-secondary" onClick={clearFilter}>Clear All Filters</button>
           </div>
         </div>
         { !showSpinner ?

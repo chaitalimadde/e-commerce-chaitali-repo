@@ -7,22 +7,24 @@ export const addToken =(tokenVal) =>{
     }
 };
 
-export const addItems =(item,count) =>{
+export const addItems =(item,id) =>{
     return{
         type: 'ADD_ITEM',
         payload: {
+            id:id,
             name: item.product_name,
             price: item.price,
-            count: count,
         }
     }
 };
 
-export const deleteItems =(item) =>{
+export const deleteItems =(item, id) =>{
     return{
         type: 'DELETE_ITEM',
         payload: {
-            name: item.product_name
+            id: id,
+            name: item.product_name,
+            price: item.price,
         }
     }
 };

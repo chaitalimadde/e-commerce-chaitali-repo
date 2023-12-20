@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import '../stylesheets/Register.css';
 import { useNavigate } from 'react-router';
-import DataService from '../API/Dataservice'
+import DataService from '../API/Dataservice';
 
 const Register =()=>{
 const [data, setData] = useState();
@@ -15,6 +15,7 @@ const[user, setUser] = useState();
 
     const handleSubmit = async (e) => {
 
+
         let data = {
             "first_name" : fname,
             "last_name"  : lname,
@@ -24,6 +25,8 @@ const[user, setUser] = useState();
         }
        await DataService.registerService(data).then((res)=>{
             setData(res.user);
+            alert("User is created Successfully");
+            navigate("/")
         })
         .catch((err) =>{
             navigate("/error")

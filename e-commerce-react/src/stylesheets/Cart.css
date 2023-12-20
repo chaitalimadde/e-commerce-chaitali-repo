@@ -1,0 +1,14 @@
+.card1{
+    padding: 15px;
+    width: 50%;
+    height: 30%;
+
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,0);
+    
+}
+
+.cardNew{
+    margin-left: 25% !important;
+}

@@ -56,7 +56,7 @@ useEffect(()=>{
             </li>
           </ul>
           <div className="navbar-nav ms-auto ms-2 mb-lg-0 ">
-          <img src="/assets/cart2.png" alt="cart" className="logo" />
+          <img src="/assets/cart2.png" alt="cart" className="logo" onClick={()=>navigate("/cart")} />
             <span className="cart-basket">{totalCount}</span>
 
             <div className="dropdown">

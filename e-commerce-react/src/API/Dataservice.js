@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useSelector } from "react-redux";
 import TokenAuth from "../Components/TokenAuth";
 
 const token ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNzAyMjg3MDgyLCJleHAiOjE3MDQ4NzkwODJ9.-cIGHGviGo1h88FoV49ffs60UlVTDbIuY9OG2ZgnSGA';
@@ -45,6 +44,20 @@ getFilter =(data)=>{
         url: `http://localhost:1337/api/filterProducts`,
         data:data
       })
+}
+
+placeOrder =(data)=>{
+  const tokenVal = TokenAuth().token;
+
+      return axios.request({
+        headers: {
+          Authorization: `Bearer ${tokenVal}`
+        },
+        method: "POST",
+        url: `http://localhost:1337/api/orders`,
+        data:data
+      })
+    
 }
 
 }
