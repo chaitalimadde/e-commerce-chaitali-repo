@@ -36,7 +36,7 @@ useEffect(()=>{
         <div className="collapse navbar-collapse" id="navbarText">
           <ul className="navbar-nav">
             <li className="nav-item active">
-              <NavLink className="nav-link active" aria-current="page" to="/">
+              <NavLink className="nav-link active" aria-current="page" to="/home">
                 Home
               </NavLink>
             </li>
@@ -49,11 +49,11 @@ useEffect(()=>{
                 Product
               </NavLink>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <NavLink className="nav-link active" aria-current="page" to="/">
                 Brands
               </NavLink>
-            </li>
+            </li> */}
           </ul>
           <div className="navbar-nav ms-auto ms-2 mb-lg-0 ">
           <img src="/assets/cart2.png" alt="cart" className="logo" onClick={()=>navigate("/cart")} />

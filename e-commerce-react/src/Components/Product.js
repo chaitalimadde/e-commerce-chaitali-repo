@@ -174,6 +174,19 @@ const navigate = useNavigate();
                     <p className="card-text">
                       Available Qty: {data.attributes.quantity}
                     </p>
+                    <p className="card-text">
+                      category: {data.attributes.category.data.attributes.category_name}
+                    </p>
+                    <p className="card-text">Sizes: 
+                    {
+                      data.attributes.sizes.data.map((i)=>{
+                        return i.attributes.size +" "
+                      })
+                    }  
+                    </p>
+                    <p className="card-text">
+                      gender: {data.attributes.gender.data.attributes.title}
+                    </p>
                     <p className="card-text">Price: {data.attributes.price}</p>
                   </div>
                 </div>
