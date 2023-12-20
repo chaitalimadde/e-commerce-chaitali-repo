@@ -34,8 +34,8 @@ loginService =(data) => {
   }
 
 getFilter =(data)=>{
-  const tokenVal = TokenAuth().token;
-   // return axios.post("http://localhost:1337/api/filterProducts", data, { headers: AuthHeader() })
+  // const tokenVal = TokenAuth().token;
+  const tokenVal = localStorage.getItem('token')
     return axios.request({
         headers: {
           Authorization: `Bearer ${tokenVal}`
@@ -47,7 +47,8 @@ getFilter =(data)=>{
 }
 
 placeOrder =(data)=>{
-  const tokenVal = TokenAuth().token;
+  // const tokenVal = TokenAuth().token;
+  const tokenVal = localStorage.getItem('token')
 
       return axios.request({
         headers: {

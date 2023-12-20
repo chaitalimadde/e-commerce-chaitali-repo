@@ -18,6 +18,11 @@ useEffect(()=>{
   settotalCount(total);
 }, [itemCount])
 
+const logoutCalled =()=>{
+  localStorage.removeItem("token");
+  navigate("/");
+}
+
   return shouldDisplayNavbar ? (
     <div>
       <nav className="navbar navbar-light bg-light navbar-expand-lg">
@@ -62,7 +67,7 @@ useEffect(()=>{
             <div className="dropdown">
               <img src="/assets/user.jpg" alt="user" className="logo2 " />
               <div className="dropdown-content">
-                <a onClick={()=>navigate("/")}>Logout</a>
+                <a onClick={logoutCalled}>Logout</a>
               </div>
             </div>
             {/* <img src="/assets/user.jpg" alt="user" className='logo2 me-5'/> */}

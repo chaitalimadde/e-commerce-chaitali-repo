@@ -24,7 +24,8 @@ const gotoHomePage =()=>{
     }
     DataService.loginService(payload).then((res)=>{
         console.log(res.data.jwt)
-        dispatch(addToken(res.data.jwt))
+        // dispatch(addToken(res.data.jwt))
+        localStorage.setItem('token', res.data.jwt)
         navigate('/home');
     })
     .catch((err) =>{

@@ -59,7 +59,7 @@ const Cart =()=>{
                 itemList.map((i,index)=>{
                     return (
                     <div className="card mt-5 mb-4 card1 cardNew">
-                      <div class="row" key={i.id}>
+                      <div className="row" key={i.id}>
                           <div className="col-4">
                            Item Name : {i.name}
                           </div>
@@ -79,7 +79,7 @@ const Cart =()=>{
                 totalPrice?
                 <div>
                 <h4 className="mt-4">Total Price is: &nbsp; {totalPrice}</h4>
-                <button type="button" class="btn btn-primary mt-4" onClick={placeOrder}>Place order</button>
+                <button type="button" className="btn btn-primary mt-4" onClick={placeOrder}>Place order</button>
                 </div>
                 : <></>
             }
