@@ -8,7 +8,8 @@ const location = useLocation();
 const restrictedRoutes = ['/','/register','/error'];
 const shouldDisplayNavbar = !restrictedRoutes.includes(location.pathname)
 const [totalCount,settotalCount] =useState(0);
-const itemCount = useSelector((state)=>state.Item)
+// const itemCount = useSelector((state)=>state.Item)
+const itemCount = useSelector((state)=>state.cart.Item)
 
 const navigate = useNavigate();
 

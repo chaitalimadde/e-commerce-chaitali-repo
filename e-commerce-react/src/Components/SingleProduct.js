@@ -7,6 +7,7 @@ import { addItems } from '../Redux/Actions';
 import { useDispatch } from 'react-redux';
 import { deleteItems } from '../Redux/Actions';
 import { useSelector } from 'react-redux';
+import { addToCart , deleteFromCart} from '../Redux/Slices/CartSlice';
 
 const SingleProduct =()=>{
 const {id} = useParams();
@@ -15,8 +16,8 @@ const [prodID, setProdID] = useState();
 const [countStore, setCountStore] = useState();
 const navigate = useNavigate();
 const dispatch = useDispatch();
-const itemCount = useSelector((state)=>state.Item)
-
+// const itemCount = useSelector((state)=>state.Item)
+const itemCount = useSelector((state)=>state.cart.Item)
 
 const getSingleAPI =(async)=>{
   Dataservice.getSingleProduct(id).then((res)=>{
@@ -34,8 +35,8 @@ const getSingleAPI =(async)=>{
 useEffect(()=>{
   getSingleAPI();
   if(prod){
-    let filterData = itemCount.filter((i)=>i.name === prod.product_name)
-  if(filterData.length > 0){
+    let filterData = itemCount?.filter((i)=>i.product_name === prod.product_name)
+  if(filterData?.length > 0){
     setCountStore(filterData[0].count);
   }
   else{
@@ -48,11 +49,15 @@ useEffect(()=>{
 },[prod]);
 
 const addCount =()=>{
-    dispatch(addItems(prod,prodID))
+    // dispatch(addItems(prod,prodID))
+    prod.id = prodID;
+    dispatch(addToCart(prod));
 }
 
 const deleteCount =()=>{
-  dispatch(deleteItems(prod,prodID))
+  // dispatch(deleteItems(prod,prodID))
+  prod.id = prodID;
+  dispatch(deleteFromCart(prod));
 }
     return (
       

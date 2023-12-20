@@ -7,11 +7,10 @@ import { useNavigate } from "react-router";
 const Cart =()=>{
   const navigate = useNavigate();
   const [showSpinner, setshowSpinner] =useState(false);
-    const itemList = useSelector((state)=>state.Item)
+    // const itemList = useSelector((state)=>state.Item)
+    const itemList = useSelector((state)=>state.cart.Item)
     const [totalPrice,setTotalPrice] = useState();
     const [error, setError] =useState(false);
-
-   console.log(itemList)
 
    useEffect(()=>{
     let total = itemList.reduce((sum,item)=> sum + item.count * item.price, 0)
@@ -61,7 +60,7 @@ const Cart =()=>{
                     <div className="card mt-5 mb-4 card1 cardNew">
                       <div className="row" key={i.id}>
                           <div className="col-4">
-                           Item Name : {i.name}
+                           Item Name : {i.product_name}
                           </div>
                           <div className="col-sm-4">
                             Price: {i.price}
