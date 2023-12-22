@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
-// import {getProducts, getCategories, getFilter, getGenders,getSizes} from '../API/Dataservice';
 import DataService from '../API/Dataservice';
 import '../stylesheets/Product.css';
 import { useNavigate } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dataservice from "../API/Dataservice";
-import { timeout } from "q";
 
 const Product =()=>{
 const [productData, setProductData] =useState();
@@ -33,6 +31,15 @@ const navigate = useNavigate();
         setsizeData(res3.data.data);
         setgenderData(res4.data.data);
         setshowSpinner(false);
+      // const result1 = await DataService.getProducts();
+      // setProductData(result1.data.data);
+      // const result2 = await DataService.getCategories();
+      // setProductData(result2.data.data);
+      // const result3 = await DataService.getSizes();
+      // setProductData(result3.data.data);
+      // const result4 = await DataService.getGenders();
+      // setProductData(result4.data.data);
+      // setshowSpinner(false);
     }
     catch(err){
         setError(true);

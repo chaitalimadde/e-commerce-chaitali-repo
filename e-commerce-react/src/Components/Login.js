@@ -3,8 +3,7 @@ import '../stylesheets/Register.css';
 import { useNavigate } from "react-router";
 import DataService  from "../API/Dataservice"
 import { useDispatch } from 'react-redux';
-import { addToken } from '../Redux/Actions';
-
+import {addToken} from '../Redux/Slices/TokenSlice';
 
 
 const Login =()=>{
@@ -25,7 +24,8 @@ const gotoHomePage =()=>{
     DataService.loginService(payload).then((res)=>{
         console.log(res.data.jwt)
         // dispatch(addToken(res.data.jwt))
-        localStorage.setItem('token', res.data.jwt)
+        // localStorage.setItem('token', res.data.jwt)
+        dispatch(addToken(res.data.jwt));
         navigate('/home');
     })
     .catch((err) =>{
